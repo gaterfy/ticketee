@@ -17,6 +17,7 @@ class ProjectsController < ApplicationController
 
   # GET /projects/1/edit
   def edit
+    @project = Project.find(params[:id])
   end
 
   # POST /projects or /projects.json
@@ -28,6 +29,7 @@ class ProjectsController < ApplicationController
         format.html { redirect_to project_url(@project), notice: "Project has been created." }
         format.json { render :show, status: :created, location: @project }
       else
+        flash.now["alert"] = "Project has not been created." 
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @project.errors, status: :unprocessable_entity }
       end
@@ -38,9 +40,10 @@ class ProjectsController < ApplicationController
   def update
     respond_to do |format|
       if @project.update(project_params)
-        format.html { redirect_to project_url(@project), notice: "Project was successfully updated." }
+        format.html { redirect_to project_url(@project), notice: "Project has been updated." }
         format.json { render :show, status: :ok, location: @project }
       else
+        flash.now[:alert] = 'Project has not been updated.' 
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @project.errors, status: :unprocessable_entity }
       end
@@ -52,7 +55,7 @@ class ProjectsController < ApplicationController
     @project.destroy
 
     respond_to do |format|
-      format.html { redirect_to projects_url, notice: "Project was successfully destroyed." }
+      format.html { redirect_to projects_url, notice: "Project has been deleted." }
       format.json { head :no_content }
     end
   end
