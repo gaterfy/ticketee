@@ -1,0 +1,10 @@
+<div class="ticket">
+  <header>
+    <h1><%= @project.name %></h1>
+  </header>
+  <header>
+    <h2><%= @ticket.name %></h2>
+  </header>
+  <p style="color: green"><%= notice %></p>
+  <%= simple_format(@ticket.description) %>
+</div>
