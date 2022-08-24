@@ -3,10 +3,20 @@
   <ul class="actions">
     <li><%= link_to "New Ticket", new_project_ticket_path(@project) %></li>
   </ul>
+
+  <ul class="tickets">
+    <% @project.tickets.find_each do |ticket| %>
+      <li>
+        #<%= ticket.id %> -
+        <%= link_to ticket.name, [@project, ticket] %>
+      </li>
+    <% end %>
+  </ul>
 </header>
 <p style="color: green"><%= notice %></p>
 
 <%= render @project %>
+
 
 <div>
   <%= link_to "Edit Project", edit_project_path(@project) %> |

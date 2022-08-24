@@ -2,6 +2,6 @@ FactoryBot.define do
   factory :ticket do
     name { "MyString" }
     description { "MyText" }
-    project { nil }
+    association(:project)
   end
 end
