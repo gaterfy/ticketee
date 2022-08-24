@@ -1,26 +1,30 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
-RSpec.feature 'Users can edit existing projects' do
+
+RSpec.feature 'Users can edit existing tickets' do
+  let(:project) { FactoryBot.create(:project) }
+  let(:ticket) { FactoryBot.create(:ticket, project: project) }
+
   before do
-    FactoryBot.create(:project, name: 'Visual Studio Code')
-    visit '/'
-    click_link 'Visual Studio Code'
-    click_link 'Edit Project'
+    visit project_ticket_path(project, ticket)
   end
 
   scenario 'with valid attributes' do
-    fill_in 'Name', with: 'Visual Studio Code Nightly'
-    click_button 'Update Project'
-    expect(page).to have_content 'Project has been updated.'
-    expect(page).to have_content 'Visual Studio Code Nightly'
+    click_link 'Edit Ticket'
+    fill_in 'Name', with: 'Make it really shiny!'
+    click_button 'Update Ticket'
+    expect(page).to have_content 'Ticket has been updated.'
+    within('.ticket h2') do
+      expect(page).to have_content 'Make it really shiny!'
+      expect(page).not_to have_content ticket.name
+    end
   end
 
-  scenario 'when providing invalid attributes' do
+  scenario 'with invalid attributes' do
+    click_link 'Edit Ticket'
     fill_in 'Name', with: ''
-    fill_in 'Description', with: ''
-    click_button 'Update Project'
-    expect(page).to have_content "Name can't be blank"
-    expect(page).to have_content "Description can't be blank"
+    click_button 'Update Ticket'
+    expect(page).to have_content 'Ticket has not been updated.'
   end
 end

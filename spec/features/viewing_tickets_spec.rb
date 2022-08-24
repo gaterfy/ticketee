@@ -12,14 +12,21 @@ RSpec.feature 'Users can view tickets' do
                                name: 'Standards compliance', description: "Isn't a joke.")
     visit '/'
   end
-  scenario 'for a given project' do
-    click_link 'Visual Studio Code'
-    expect(page).to have_content 'Make it shiny!'
-    expect(page).to_not have_content 'Standards compliance'
-    click_link 'Make it shiny!'
-    within('.ticket h2') do
-      expect(page).to have_content 'Make it shiny!'
-    end
-    expect(page).to have_content 'Gradients! Starbursts! Oh my!'
+  scenario "with valid attributes" do
+    click_link "Edit Ticket"
+    fill_in "Name", with: "Make it really shiny!"
+    click_button "Update Ticket"
+    expect(page).to have_content "Ticket has been updated."
+    within(".ticket h2") do
+      expect(page).to have_content "Make it really shiny!"
+      expect(page).not_to have_content ticket.name
+    end    
+  end
+
+  scenario "with invalid attributes" do
+    click_link "Edit Ticket"
+    fill_in "Name", with: ""
+    click_button "Update Ticket"
+    expect(page).to have_content "Ticket has not been updated."
   end
 end

@@ -1,3 +1,5 @@
+ <p style="color: red"><%= @alert %></p>
+
 <%= form_with(model: [project, ticket], local: true) do |form| %>
   <% if ticket.errors.any? %>
     <div id="error_explanation">
