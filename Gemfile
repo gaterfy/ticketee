@@ -24,7 +24,8 @@ gem 'jbuilder', '~> 2.7'
 gem 'bootstrap', '~> 5.2.0'
 gem 'bootstrap_form', '~> 5.1'
 gem 'font-awesome-rails', '4.7.0.8'
-
+# Authentication
+gem 'devise', '~> 4.8.1'
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
 
