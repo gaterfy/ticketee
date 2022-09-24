@@ -40,6 +40,7 @@ RSpec.configure do |config|
 
   # add Warden
   config.include Warden::Test::Helpers, type: :feature
+  config.include Warden::Test::Helpers, type: :request
   config.after(type: :feature) { Warden.test_reset! }
 
   # You can uncomment this line to turn off ActiveRecord support entirely.

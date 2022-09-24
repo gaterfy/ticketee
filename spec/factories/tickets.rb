@@ -4,5 +4,9 @@ FactoryBot.define do
     description { "MyText" }
     association(:project)
     author { association(:user) }
+
+    trait :admin do
+      admin { true }
+    end
   end
 end
