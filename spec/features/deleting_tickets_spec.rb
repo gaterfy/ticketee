@@ -3,6 +3,7 @@ RSpec.feature "Users can delete tickets" do
   let(:project) { FactoryBot.create(:project) }
   let(:ticket) { FactoryBot.create(:ticket, project: project) }
   before do
+    login_as(FactoryBot.create(:user))
     visit project_ticket_path(project, ticket)
   end
   scenario "successfully" do

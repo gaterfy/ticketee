@@ -3,6 +3,7 @@
 require 'rails_helper'
 RSpec.feature 'Users can create new Ticket' do
   before do
+    login_as(FactoryBot.create(:user))
     project = FactoryBot.create(:project, name: 'Visual Studio Code')
 
     visit project_path(project)

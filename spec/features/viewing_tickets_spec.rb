@@ -3,6 +3,7 @@
 require 'rails_helper'
 RSpec.feature 'Users can view tickets' do
   before do
+    login_as(FactoryBot.create(:user))
     vscode = FactoryBot.create(:project, name: 'Visual Studio Code')
     FactoryBot.create(:ticket, project: vscode,
                                name: 'Make it shiny!',
