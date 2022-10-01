@@ -1,5 +1,5 @@
 class Admin::UsersController < Admin::ApplicationController
-  before_action :set_user, only: %i(show edit update destroy)
+  before_action :set_user, only: %i(show edit update destroy archive)
   
   def create
     @user = User.new(user_params)
@@ -14,7 +14,7 @@ class Admin::UsersController < Admin::ApplicationController
   end
 
   def index
-    @users = User.order(:email)
+    @users = User.active.order(:email)
   end
 
   def new
@@ -38,6 +38,16 @@ class Admin::UsersController < Admin::ApplicationController
       flash.now[:alert] = "User has not been updated."
       render "edit"
     end
+  end
+
+  def archive
+    if @user == current_user
+      flash[:alert] = "You cannot archive yourself!"
+    else
+      @user.archive!
+      flash[:notice] = "User has been archived."
+    end
+    redirect_to admin_users_path
   end
 
   private
