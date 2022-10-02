@@ -10,8 +10,10 @@ import "channels"
 import 'jquery'
 import 'popper.js'
 import 'bootstrap'
+import 'dropzone'
 
 Rails.start()
 Turbolinks.start()
 ActiveStorage.start()
 require("bootstrap");
+require("../src/dropzone");

@@ -3,7 +3,7 @@
   <% admins_only do %>
     <ul class="actions">
       <li>
-        <%= link_to "Edit Project", edit_project_path(@project), class: "edit" %>
+        <%= link_to "Edit Project", edit_admin_project_path(@project), class: "edit" %>
       </li>
       <li>
         <%= link_to "Delete Project",
