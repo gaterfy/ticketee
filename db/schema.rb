@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_10_02_155210) do
+ActiveRecord::Schema[7.0].define(version: 2022_10_16_174057) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -49,7 +49,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_02_155210) do
     t.uuid "author_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.uuid "state_id"
     t.index ["author_id"], name: "index_comments_on_author_id"
+    t.index ["state_id"], name: "index_comments_on_state_id"
     t.index ["ticket_id"], name: "index_comments_on_ticket_id"
   end
 
@@ -60,6 +62,11 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_02_155210) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "states", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name"
+    t.string "color"
+  end
+
   create_table "tickets", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"
     t.text "description"
@@ -67,8 +74,10 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_02_155210) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.uuid "author_id", null: false
+    t.uuid "state_id"
     t.index ["author_id"], name: "index_tickets_on_author_id"
     t.index ["project_id"], name: "index_tickets_on_project_id"
+    t.index ["state_id"], name: "index_tickets_on_state_id"
   end
 
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -99,8 +108,10 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_02_155210) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "comments", "states"
   add_foreign_key "comments", "tickets"
   add_foreign_key "comments", "users", column: "author_id"
   add_foreign_key "tickets", "projects"
+  add_foreign_key "tickets", "states"
   add_foreign_key "tickets", "users", column: "author_id"
 end
